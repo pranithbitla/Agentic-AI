@@ -1,0 +1,40 @@
+name: CareerPilot Tests
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "careerpilot-ai/**"
+      - ".github/workflows/careerpilot-tests.yml"
+  pull_request:
+    paths:
+      - "careerpilot-ai/**"
+      - ".github/workflows/careerpilot-tests.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: careerpilot-ai
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: careerpilot-ai/requirements-dev.txt
+
+      - name: Install dependencies
+        run: python -m pip install -r requirements-dev.txt
+
+      - name: Run tests
+        run: python -m pytest -q

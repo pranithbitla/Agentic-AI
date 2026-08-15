@@ -87,10 +87,10 @@ careerpilot-ai/
 
 ## ⚙️ Setup
 
-### 1. Clone this branch
+### 1. Clone the repository
 
 ```bash
-git clone --branch careerpilot-ai --single-branch https://github.com/pranithbitla/Agentic-AI.git
+git clone https://github.com/pranithbitla/Agentic-AI.git
 cd Agentic-AI/careerpilot-ai
 ```
 

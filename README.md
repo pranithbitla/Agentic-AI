@@ -1,116 +1,99 @@
-# Agentic AI & Python Projects
+# Agentic AI & Python Portfolio
 
-A hands-on learning repository for Python fundamentals, automation, and Agentic AI applications.
+A project-based repository showing my progression from Python fundamentals to practical Agentic AI applications.
+
+The main portfolio project is **CareerPilot AI**, an agentic résumé and job-match analyzer. The repository also contains foundational Python projects that demonstrate core programming concepts and problem-solving practice.
+
+## ⭐ Featured Project — CareerPilot AI
+
+[`careerpilot-ai/`](careerpilot-ai/)
+
+CareerPilot AI analyzes a résumé against a job description and produces a structured job-match report.
+
+**Highlights**
+
+- Agent workflow built with LangGraph
+- Google Gemini for structured job analysis and recommendations
+- Deterministic skill-match scoring instead of an LLM-generated percentage
+- Required vs. preferred skill weighting
+- Résumé skill-gap analysis and learning recommendations
+- Streamlit user interface
+- PDF résumé parsing
+- Pydantic structured outputs
+- Caching to reduce repeated LLM calls
+- Automated tests with pytest
+- GitHub Actions CI for CareerPilot tests
+
+**Tech stack:** Python · LangGraph · Google Gemini · Pydantic · Streamlit · pypdf · pytest
+
+➡️ [View the complete CareerPilot documentation](careerpilot-ai/README.md)
 
 ## 📁 Repository Structure
 
 ```text
 Agentic-AI/
-├── README.md
-├── python-projects/
-│   ├── ATM.py
-│   ├── email_automation.py
-│   ├── main.py
-│   ├── movie_recommendations (1).py
-│   └── my_programs.py
-└── careerpilot-ai/
-    ├── app.py
-    ├── careerpilot/
-    ├── docs/
-    ├── examples/
-    ├── tests/
-    ├── requirements.txt
-    ├── requirements-dev.txt
-    ├── .env.example
-    ├── .gitignore
-    └── README.md
+├── .github/
+│   └── workflows/
+│       └── careerpilot-tests.yml
+├── careerpilot-ai/          # Featured Agentic AI project
+├── python-projects/         # Python foundation projects
+├── .gitignore
+└── README.md
 ```
 
-## 🚀 Featured Project — CareerPilot AI
+## 🧩 Project Index
 
-**CareerPilot AI** is an agentic résumé and job-match analyzer built with Python, LangGraph, Google Gemini, Pydantic, and Streamlit.
+| Project | Focus | Level |
+|---|---|---|
+| [CareerPilot AI](careerpilot-ai/) | Agentic AI, LangGraph, Gemini, Streamlit | Featured |
+| [Chat Analyzer](python-projects/chat_analyzer.py) | Functions, strings, collections, modular Python | Foundational |
+| [ATM Simulator](python-projects/atm_simulator.py) | Loops, conditions, state, user input | Foundational |
+| [MovieMate](python-projects/movie_recommender.py) | Lists, conditions, dates, user interaction | Foundational |
 
-It can:
+## 🛠 Engineering Practices Demonstrated
 
-- Read a text-based PDF résumé
-- Analyze a pasted job description
-- Extract required and preferred skills
-- Calculate a deterministic résumé-to-job match score
-- Identify missing skills and strengths
-- Generate résumé improvements and a learning roadmap
-- Create role-specific interview questions
-- Cache repeated analyses to reduce unnecessary LLM calls
-- Present the result in a Streamlit dashboard
+- Clear project separation and documentation
+- Modular Python package structure in CareerPilot
+- Environment-variable based secret handling
+- `.env.example` instead of committed API keys
+- Unit tests with pytest
+- Automated CI with GitHub Actions
+- Git/GitHub based version control
 
-CareerPilot uses a LangGraph workflow to coordinate analysis steps while keeping the actual match percentage deterministic in Python instead of asking the LLM to invent a score.
+## 🚀 Quick Start
 
-For full setup instructions, architecture details, testing, and documentation, see [`careerpilot-ai/README.md`](careerpilot-ai/README.md).
+Clone the repository:
 
-### CareerPilot Tech Stack
+```bash
+git clone https://github.com/pranithbitla/Agentic-AI.git
+cd Agentic-AI
+```
 
-| Area | Technology |
-|---|---|
-| Language | Python |
-| Agent workflow | LangGraph |
-| LLM | Google Gemini |
-| Structured output | Pydantic |
-| UI | Streamlit |
-| PDF parsing | pypdf |
-| Testing | pytest |
-
-### Run CareerPilot
+### Run CareerPilot AI
 
 ```bash
 cd careerpilot-ai
 python -m venv .venv
-```
-
-Install dependencies:
-
-```bash
 pip install -r requirements.txt
-```
-
-Add your Gemini API key using `.env.example`, then run:
-
-```bash
 streamlit run app.py
 ```
 
-## 🐍 Python Practice Projects
+Before running CareerPilot, copy `.env.example` to `.env` and add your Gemini API key.
 
-The `python-projects/` folder contains smaller projects and exercises created while strengthening Python fundamentals.
+### Explore the Python projects
 
-| File | Description |
-|---|---|
-| `ATM.py` | ATM operations and user-interaction practice project. |
-| `movie_recommendations (1).py` | Movie recommendation project using Python logic and user input. |
-| `my_programs.py` | Collection of Python practice programs and programming exercises. |
-| `main.py` | General Python experimentation and practice script. |
-| `email_automation.py` | Email automation experimentation module. |
+```bash
+cd python-projects
+python atm_simulator.py
+```
 
-## 🎯 Learning Goals
+See [`python-projects/README.md`](python-projects/README.md) for details.
 
-- Strengthen Python programming fundamentals
-- Build real-world automation projects
-- Understand AI-agent workflows
-- Learn LangGraph and LLM integration
-- Build practical Streamlit applications
-- Practice testing and structured project organization
-- Maintain clean projects using Git and GitHub
+## 🎯 Current Direction
 
-## 🛠️ Technologies Used Across This Repository
+This repository documents a learning path from Python programming fundamentals toward AI engineering and Agentic AI. Future work will focus on stronger UI/UX, deployment, semantic matching, additional automated tests, and production-oriented AI workflows.
 
-- Python
-- LangGraph
-- Google Gemini
-- Pydantic
-- Streamlit
-- pypdf
-- pytest
-- Git
-- GitHub
+## 👨‍💻 Author
 
-## 📌 Repository Status
-
-This repository documents my progression from Python fundamentals to structured Agentic AI applications. CareerPilot AI is the main end-to-end project, while `python-projects/` contains smaller practice programs and experiments.
+**Pranith Bitla**  
+GitHub: [@pranithbitla](https://github.com/pranithbitla)
