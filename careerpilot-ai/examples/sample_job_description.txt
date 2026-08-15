@@ -1,0 +1,17 @@
+Job Title: AI Intern
+Company: SmartBridge
+Location: Hyderabad
+
+We are looking for a recent Computer Science graduate with knowledge of Python,
+Generative AI and AI agents.
+
+The intern will build AI-agent applications, work with APIs, assist with
+machine-learning projects and prepare technical documentation.
+
+Required skills:
+Python, problem-solving, communication and basic AI/ML knowledge.
+
+Preferred skills:
+LLMs, RAG, LangChain, Git and cloud deployment.
+Preferred skill: Streamlit
+Freshers and 2024-2026 graduates can apply.
