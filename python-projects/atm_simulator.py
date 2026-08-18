@@ -1,54 +1,145 @@
-print("Welcome")
-balance=10000
-attempt=0
-pin=1234
-transcations=[]
-while attempt<3:
-    user_pin=int(input("Enter the pin:"))
-    if user_pin==pin:
-       while True:
-        print("Choose the option:")
-        print("1.Check Balance\n2.Deposit\n3.Withdraw\n4.Ministatement\n5.Change PIN\n6.Exit")
-        inp1=int(input("Enter what to do now:"))
-        if inp1==6:
-          print("Thank you for Using ATM")
-          break
-        elif inp1==1:
-          print(balance)
-          
-        elif inp1==2:
-          deposit=int(input("Enter the Amount to deposit:"))
-          balance+=deposit
-          transcations.append(f"Despisted ${deposit}")
-          print(f"Updated balance:{balance}")
-          
-        elif inp1==3:
-          withdraw=int(input("Enter amount to withdraw:"))
-          if withdraw<=balance:
-            balance-=withdraw
-            transcations.append(f"Withdawn amount ${withdraw}")
-            print(f"Transaction Succesful! the balance amount:{balance}")
-            
-        elif inp1==4:
-          print("\n-------------Mini Statement-----------------")
-          if len(transcations)==-1:
-             print("No trancations found!")
-             
-          else: 
-             for i in range(len(transcations)):
-                print(f"{i+1}.{transcations[i]}")
-        elif inp1==5:
-           pin2=int(input("Enter Current pin:"))
-           if pin==pin2:
-              new_pin=int(input("Enter the New PIN:"))
-              pin=new_pin
-              print("PIN changed Succesfully")
-              print(f"The New pin was{new_pin}")
-           else:
-              print("Wrong PIN")   
-          
-    else:
-        attempt+=1
-        print("Wrong PIN")
-if attempt==3:
-    print("Card blocked")    
+class ATM:
+    def __init__(self, balance=10000, pin=1234):
+        self.balance = balance
+        self.pin = pin
+        self.transactions = []
+        self.max_attempts = 3
+
+    def authenticate(self):
+        """Verify the user's PIN. Card is blocked after 3 failed attempts."""
+        attempts = 0
+
+        while attempts < self.max_attempts:
+            try:
+                user_pin = int(input("Enter the PIN: "))
+            except ValueError:
+                attempts += 1
+                print("PIN must contain numbers only.")
+                continue
+
+            if user_pin == self.pin:
+                print("Login successful!")
+                return True
+
+            attempts += 1
+            remaining = self.max_attempts - attempts
+            print("Wrong PIN.")
+
+            if remaining > 0:
+                print(f"Attempts remaining: {remaining}")
+
+        print("Card blocked.")
+        return False
+
+    def check_balance(self):
+        print(f"Available balance: ₹{self.balance}")
+
+    def deposit(self):
+        try:
+            amount = int(input("Enter the amount to deposit: ₹"))
+        except ValueError:
+            print("Please enter a valid amount.")
+            return
+
+        if amount <= 0:
+            print("Deposit amount must be greater than 0.")
+            return
+
+        self.balance += amount
+        self.transactions.append(f"Deposited ₹{amount}")
+        print(f"Deposit successful. Updated balance: ₹{self.balance}")
+
+    def withdraw(self):
+        try:
+            amount = int(input("Enter the amount to withdraw: ₹"))
+        except ValueError:
+            print("Please enter a valid amount.")
+            return
+
+        if amount <= 0:
+            print("Withdrawal amount must be greater than 0.")
+        elif amount > self.balance:
+            print("Insufficient balance.")
+        else:
+            self.balance -= amount
+            self.transactions.append(f"Withdrawn ₹{amount}")
+            print(f"Transaction successful. Remaining balance: ₹{self.balance}")
+
+    def mini_statement(self):
+        print("\n------------- Mini Statement -------------")
+
+        if not self.transactions:
+            print("No transactions found.")
+            return
+
+        for number, transaction in enumerate(self.transactions, start=1):
+            print(f"{number}. {transaction}")
+
+        print(f"Current balance: ₹{self.balance}")
+
+    def change_pin(self):
+        try:
+            current_pin = int(input("Enter current PIN: "))
+        except ValueError:
+            print("PIN must contain numbers only.")
+            return
+
+        if current_pin != self.pin:
+            print("Wrong PIN.")
+            return
+
+        try:
+            new_pin = int(input("Enter the new 4-digit PIN: "))
+        except ValueError:
+            print("PIN must contain numbers only.")
+            return
+
+        if not 1000 <= new_pin <= 9999:
+            print("PIN must be exactly 4 digits.")
+        elif new_pin == self.pin:
+            print("New PIN cannot be the same as the current PIN.")
+        else:
+            self.pin = new_pin
+            print("PIN changed successfully.")
+
+    def show_menu(self):
+        print(
+            "\nChoose an option:"
+            "\n1. Check Balance"
+            "\n2. Deposit"
+            "\n3. Withdraw"
+            "\n4. Mini Statement"
+            "\n5. Change PIN"
+            "\n6. Exit"
+        )
+
+    def run(self):
+        print("Welcome to the ATM")
+
+        if not self.authenticate():
+            return
+
+        while True:
+            self.show_menu()
+            choice = input("Enter your choice: ").strip()
+
+            if choice == "1":
+                self.check_balance()
+            elif choice == "2":
+                self.deposit()
+            elif choice == "3":
+                self.withdraw()
+            elif choice == "4":
+                self.mini_statement()
+            elif choice == "5":
+                self.change_pin()
+            elif choice == "6":
+                print("Thank you for using the ATM.")
+                break
+            else:
+                print("Invalid option. Please choose from 1 to 6.")
+
+
+if __name__ == "__main__":
+    atm = ATM()
+    atm.run()
