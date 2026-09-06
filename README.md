@@ -1,5 +1,7 @@
 # Agentic AI & Python Portfolio
 
+[![CareerPilot Tests](https://github.com/pranithbitla/Agentic-AI/actions/workflows/careerpilot-tests.yml/badge.svg)](https://github.com/pranithbitla/Agentic-AI/actions/workflows/careerpilot-tests.yml)
+
 A project-based repository showing my progression from Python fundamentals to practical Agentic AI applications.
 
 The main portfolio project is **CareerPilot AI**, an agentic résumé and job-match analyzer. The repository also contains foundational Python projects that demonstrate core programming concepts and problem-solving practice.
@@ -15,14 +17,16 @@ CareerPilot AI analyzes a résumé against a job description and produces a stru
 - Agent workflow built with LangGraph
 - Google Gemini for structured job analysis and recommendations
 - Deterministic skill-match scoring instead of an LLM-generated percentage
+- Prompt-injection boundaries for untrusted résumé and job text
 - Required vs. preferred skill weighting
+- Separate ATS keyword coverage
 - Résumé skill-gap analysis and learning recommendations
 - Streamlit user interface
-- PDF résumé parsing
+- PDF and pasted-text résumé input
 - Pydantic structured outputs
-- Caching to reduce repeated LLM calls
-- Automated tests with pytest
-- GitHub Actions CI for CareerPilot tests
+- Privacy-first, opt-in disk caching
+- Safe example report that works without an API key
+- Ruff, pytest, coverage enforcement, and multi-version GitHub Actions CI
 
 **Tech stack:** Python · LangGraph · Google Gemini · Pydantic · Streamlit · pypdf · pytest
 
@@ -57,7 +61,8 @@ Agentic-AI/
 - Environment-variable based secret handling
 - `.env.example` instead of committed API keys
 - Unit tests with pytest
-- Automated CI with GitHub Actions
+- Ruff linting and coverage-enforced tests
+- Automated CI on Python 3.11 and 3.12
 - Git/GitHub based version control
 
 ## 🚀 Quick Start
@@ -91,7 +96,7 @@ See [`python-projects/README.md`](python-projects/README.md) for details.
 
 ## 🎯 Current Direction
 
-This repository documents a learning path from Python programming fundamentals toward AI engineering and Agentic AI. Future work will focus on stronger UI/UX, deployment, semantic matching, additional automated tests, and production-oriented AI workflows.
+This repository documents a learning path from Python fundamentals toward AI engineering and Agentic AI. CareerPilot now emphasizes explainable scoring, responsible handling of untrusted inputs, privacy-aware defaults, automated quality checks, and honest product limitations.
 
 ## 👨‍💻 Author
 

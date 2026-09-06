@@ -5,19 +5,27 @@ This guide explains how CareerPilot is organized and how to extend it without mi
 ## Module responsibilities
 
 ### `careerpilot/resume_reader.py`
-Reads text-based PDF résumés with `pypdf`. It raises clear errors for missing PDFs or PDFs with no readable text.
+Reads PDF or plain-text résumés and enforces size, page, format, and extracted-text limits.
+
+### `careerpilot/config.py`
+Centralizes input limits, Gemini model selection, and user-facing configuration errors.
+
+### `careerpilot/prompts.py`
+Builds prompts with explicit trust boundaries around untrusted résumé and job-description content.
 
 ### `careerpilot/job_analyzer.py`
 Uses Gemini structured output and a Pydantic schema to convert an unstructured job description into fields such as required skills, preferred skills, experience, responsibilities, and ATS keywords.
 
 ### `careerpilot/skill_matcher.py`
-Contains deterministic matching logic. It normalizes text, checks skill aliases, separates matched/missing skills, and calculates required/preferred scores.
+Contains deterministic matching logic. It normalizes text, resolves aliases in both directions,
+deduplicates equivalent skills, and calculates required, preferred, and ATS keyword coverage.
 
 ### `careerpilot/recommendation_agent.py`
 Uses the résumé, structured job analysis, and deterministic match result to generate grounded recommendations. Its prompt explicitly prevents invented experience or skills.
 
 ### `careerpilot/cache.py`
-Builds a SHA-256 hash from the résumé text and job description. If the same inputs are analyzed again, CareerPilot can reuse the saved report.
+Builds a SHA-256 hash from the résumé text and job description. Persistent reuse is opt-in through
+`CAREERPILOT_ENABLE_DISK_CACHE=true` because reports may contain résumé-derived data.
 
 ### `careerpilot/graph.py`
 Defines the LangGraph state and workflow nodes. Conditional routing decides whether to return a cached result or execute a fresh analysis.
@@ -35,9 +43,9 @@ Provides the Streamlit user interface and manages temporary uploaded files.
 6. Run Streamlit locally for end-to-end validation.
 
 ```bash
-pip install -r requirements.txt
 pip install -r requirements-dev.txt
-pytest -q
+python -m ruff check .
+python -m pytest -q
 streamlit run app.py
 ```
 
@@ -47,7 +55,9 @@ Add aliases only when they clearly represent the same skill and add or update a 
 
 ## Testing strategy
 
-Deterministic logic should be tested without requiring an LLM API call. Recommended next tests include empty skill lists, punctuation normalization, cache hit/miss behavior, invalid job descriptions, and graph routing with mocked LLM responses.
+Tests do not require an API key. Inject fake AI clients for integration boundaries and mock individual
+workflow functions when testing LangGraph nodes. CI runs Ruff and enforces at least 80% package
+coverage on Python 3.11 and 3.12.
 
 ## Design principles
 

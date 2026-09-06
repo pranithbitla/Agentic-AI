@@ -1,0 +1,106 @@
+{
+  "input_hash": "fictional-example",
+  "job_analysis": {
+    "role_title": "AI Engineering Intern",
+    "company_name": "Example Labs",
+    "required_skills": [
+      "Python",
+      "Git",
+      "REST APIs",
+      "Communication"
+    ],
+    "preferred_skills": [
+      "LangGraph",
+      "RAG",
+      "Docker"
+    ],
+    "experience_required": "Freshers and final-year students with relevant projects may apply.",
+    "education_required": [
+      "Bachelor's degree in Computer Science or a related field"
+    ],
+    "responsibilities": [
+      "Build and test LLM-powered workflows",
+      "Integrate external APIs",
+      "Document experiments and results"
+    ],
+    "ats_keywords": [
+      "Python",
+      "Git",
+      "REST APIs",
+      "LangGraph",
+      "RAG",
+      "Docker"
+    ]
+  },
+  "match_result": {
+    "role_title": "AI Engineering Intern",
+    "company_name": "Example Labs",
+    "match_score": 62,
+    "required_skill_score": 75,
+    "preferred_skill_score": 33,
+    "ats_keyword_score": 50,
+    "required_skill_count": 4,
+    "preferred_skill_count": 3,
+    "ats_keyword_count": 6,
+    "matched_required_skills": [
+      "Python",
+      "Git",
+      "Communication"
+    ],
+    "missing_required_skills": [
+      "REST APIs"
+    ],
+    "matched_preferred_skills": [
+      "LangGraph"
+    ],
+    "missing_preferred_skills": [
+      "RAG",
+      "Docker"
+    ],
+    "matched_ats_keywords": [
+      "Python",
+      "Git",
+      "LangGraph"
+    ],
+    "missing_ats_keywords": [
+      "REST APIs",
+      "RAG",
+      "Docker"
+    ]
+  },
+  "recommendations": {
+    "match_summary": "The candidate has a solid Python and Git foundation plus relevant agent-workflow experience. REST API practice is the highest-priority gap for this role.",
+    "top_strengths": [
+      "Built a working LangGraph portfolio project",
+      "Uses Git and automated tests",
+      "Explains technical work clearly"
+    ],
+    "priority_skill_gaps": [
+      "REST API development",
+      "RAG fundamentals",
+      "Containerizing a Python application"
+    ],
+    "resume_improvements": [
+      "Add measurable project outcomes such as test count or response-time improvement",
+      "Link directly to the CareerPilot repository and demo",
+      "Describe the deterministic matching decision separately from the LLM workflow"
+    ],
+    "learning_plan": [
+      "Build a small FastAPI service with validation and error handling",
+      "Add a basic retrieval workflow with citations",
+      "Containerize the service and document the run command"
+    ],
+    "interview_questions": [
+      "Why did you use deterministic scoring instead of asking an LLM for a percentage?",
+      "How does LangGraph route between a cache hit and a new analysis?",
+      "How would you protect an LLM workflow from prompt injection?",
+      "How would you evaluate the quality of skill extraction?"
+    ],
+    "next_action": "Build and test one REST API endpoint around the existing matching engine."
+  },
+  "token_usage": {
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "total_tokens": 0
+  }
+}
