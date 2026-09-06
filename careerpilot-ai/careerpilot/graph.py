@@ -5,6 +5,7 @@ from langgraph.graph import END, START, StateGraph
 from typing_extensions import TypedDict
 
 from careerpilot.cache import create_input_hash, load_cached_report, save_report
+from careerpilot.config import validate_job_description
 from careerpilot.job_analyzer import analyze_job_description
 from careerpilot.recommendation_agent import generate_recommendations
 from careerpilot.resume_reader import extract_resume_text
@@ -37,11 +38,15 @@ def convert_usage_to_dict(usage):
 
 def read_inputs_node(state: CareerPilotState):
     resume_text = extract_resume_text(state["resume_path"])
-    job_description = Path(state["job_path"]).read_text(encoding="utf-8")
-    if not job_description.strip():
-        raise ValueError("The job description is empty.")
+    job_description = validate_job_description(
+        Path(state["job_path"]).read_text(encoding="utf-8")
+    )
     input_hash = create_input_hash(resume_text, job_description)
-    return {"resume_text": resume_text, "job_description": job_description, "input_hash": input_hash}
+    return {
+        "resume_text": resume_text,
+        "job_description": job_description,
+        "input_hash": input_hash,
+    }
 
 
 def check_cache_node(state: CareerPilotState):

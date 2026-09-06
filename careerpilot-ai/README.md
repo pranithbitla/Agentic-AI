@@ -1,179 +1,165 @@
-# 🚀 CareerPilot AI
+# CareerPilot AI
 
-**CareerPilot AI** is an agentic résumé and job-match analyzer built with **Python, LangGraph, Google Gemini, Pydantic, and Streamlit**. It compares a candidate's résumé against a job description, calculates a deterministic skill-match score, identifies gaps, and generates practical career recommendations.
+[![CareerPilot Tests](https://github.com/pranithbitla/Agentic-AI/actions/workflows/careerpilot-tests.yml/badge.svg)](https://github.com/pranithbitla/Agentic-AI/actions/workflows/careerpilot-tests.yml)
+![Python](https://img.shields.io/badge/Python-3.11%20%7C%203.12-3776AB?logo=python&logoColor=white)
+![LangGraph](https://img.shields.io/badge/Workflow-LangGraph-1C3C3C)
+![Streamlit](https://img.shields.io/badge/UI-Streamlit-FF4B4B?logo=streamlit&logoColor=white)
 
-## ✨ Key features
+CareerPilot AI is an explainable résumé-to-job matching application. It uses Gemini to turn an
+unstructured job description into validated data, calculates skill coverage with deterministic
+Python logic, and uses a LangGraph workflow to generate grounded recommendations.
 
-- Upload a text-based PDF résumé
-- Paste any job description
-- Extract structured hiring requirements with Gemini
-- Separate required and preferred skills
-- Calculate a deterministic résumé-to-job match score
-- Match common aliases such as `GitHub → Git` and `AWS → cloud deployment`
-- Generate strengths, skill gaps, résumé improvements, and a learning roadmap
-- Generate role-specific interview questions
-- Cache identical analyses to reduce unnecessary LLM calls
-- Download the complete result as JSON
-- Delete temporary uploaded files after analysis
+> Match percentages represent detected skill coverage. They are not hiring probabilities.
 
-## 🧠 Workflow
+## 30-second project review
 
-```text
-Resume + Job Description
-          │
-          ▼
-      Read Inputs
-          │
-          ▼
-      Check Cache
-       /       \
-   cached      new
-     │          │
-     │          ▼
-     │    Job Analyzer Agent
-     │          │
-     │          ▼
-     │   Deterministic Matcher
-     │          │
-     │          ▼
-     │   Recommendation Agent
-     │          │
-     └──────► Final Report
-                │
-                ▼
-          Streamlit Dashboard
+| Area | Implementation | Evidence |
+|---|---|---|
+| Agent orchestration | Explicit LangGraph state, nodes, edges, and conditional cache route | [`careerpilot/graph.py`](careerpilot/graph.py) |
+| Structured AI output | Gemini responses validated with Pydantic schemas | [`job_analyzer.py`](careerpilot/job_analyzer.py) |
+| Explainable scoring | Required/preferred weighting and two-way alias normalization | [`skill_matcher.py`](careerpilot/skill_matcher.py) |
+| AI safety | User text is JSON-encoded as untrusted data; prompts prohibit following embedded instructions | [`prompts.py`](careerpilot/prompts.py) |
+| Privacy | Temporary uploads are deleted; persistent disk caching is disabled by default | [`cache.py`](careerpilot/cache.py) |
+| Quality | Ruff plus pytest coverage on Python 3.11 and 3.12 | [CI workflow](../.github/workflows/careerpilot-tests.yml) |
+
+## Try the interface without an API key
+
+Run the app and select **Preview Example Report** in the sidebar. It loads fictional data from
+[`examples/sample_report.json`](examples/sample_report.json) and does not call Gemini.
+
+For a real analysis, users can either upload a text-based PDF or paste résumé text.
+
+## Workflow
+
+```mermaid
+flowchart TD
+    A[Validate résumé and job] --> B{Opt-in cache hit?}
+    B -->|Yes| F[Return report]
+    B -->|No| C[Gemini job analyzer]
+    C --> D[Deterministic skill matcher]
+    D --> E[Gemini recommendation agent]
+    E --> F
 ```
 
-For the detailed graph and design decisions, see [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
+The LLM interprets language and writes recommendations; it never chooses the numeric score. This
+separation makes the result easier to test and explain.
 
-## 📁 Project structure
+## Features
 
-```text
-careerpilot-ai/
-├── app.py
-├── careerpilot/
-│   ├── __init__.py
-│   ├── cache.py
-│   ├── graph.py
-│   ├── job_analyzer.py
-│   ├── recommendation_agent.py
-│   ├── resume_reader.py
-│   └── skill_matcher.py
-├── docs/
-│   ├── ARCHITECTURE.md
-│   └── DEVELOPMENT.md
-├── examples/
-│   └── sample_job_description.txt
-├── tests/
-│   └── test_skill_matcher.py
-├── .env.example
-├── .gitignore
-├── requirements.txt
-├── requirements-dev.txt
-└── README.md
-```
+- PDF upload and paste-text résumé input
+- Validated structured job extraction
+- Required, preferred, and ATS keyword coverage
+- Symmetric skill aliases such as `GitHub ↔ Git`, `AWS ↔ cloud deployment`, and
+  `PostgreSQL ↔ SQL`
+- Dynamic scoring that does not give free points when a job omits a skill category
+- Strengths, skill gaps, résumé improvements, learning roadmap, and interview questions
+- Safe example report for immediate UI review
+- Configurable Gemini model
+- Opt-in local cache for reducing repeat API calls
+- Downloadable JSON report
 
-## 🛠 Tech stack
+## Local setup
 
-| Area | Technology |
-|---|---|
-| Language | Python |
-| Agent workflow | LangGraph |
-| LLM | Google Gemini (`google-genai`) |
-| Structured output | Pydantic |
-| UI | Streamlit |
-| PDF parsing | pypdf |
-| Testing | pytest |
-
-## ⚙️ Setup
-
-### 1. Clone the repository
+Requirements: Python 3.11 or 3.12 and a Gemini API key for real analyses.
 
 ```bash
 git clone https://github.com/pranithbitla/Agentic-AI.git
 cd Agentic-AI/careerpilot-ai
-```
-
-### 2. Create a virtual environment
-
-```bash
 python -m venv .venv
 ```
 
-Windows:
+Activate the environment on Windows:
 
-```bash
+```powershell
 .venv\Scripts\activate
 ```
 
-macOS/Linux:
+Or on macOS/Linux:
 
 ```bash
 source .venv/bin/activate
 ```
 
-### 3. Install dependencies
+Install and configure:
 
 ```bash
 pip install -r requirements.txt
-```
-
-### 4. Configure Gemini
-
-Copy `.env.example` to `.env` and add your Gemini API key:
-
-```env
-GEMINI_API_KEY=your_gemini_api_key_here
-```
-
-Never commit the real `.env` file.
-
-### 5. Run the application
-
-```bash
+cp .env.example .env
 streamlit run app.py
 ```
 
-## 🧪 Run tests
+Add the API key to `.env`:
+
+```dotenv
+GEMINI_API_KEY=your_key_here
+```
+
+Optional settings:
+
+```dotenv
+GEMINI_MODEL=gemini-3.5-flash-lite
+CAREERPILOT_ENABLE_DISK_CACHE=false
+CAREERPILOT_CACHE_PATH=.careerpilot-cache/report.json
+```
+
+## Scoring method
+
+- When required and preferred skills are both listed: `70% required + 30% preferred`.
+- When only one group is listed: that group supplies the complete score.
+- When no skills are listed: the score is `0`, not a false `100%`.
+- ATS keyword coverage is displayed separately and does not inflate the skill-match score.
+- Equivalent aliases are deduplicated before scoring.
+
+## Tests and quality checks
 
 ```bash
 pip install -r requirements-dev.txt
-pytest -q
+python -m ruff check .
+python -m pytest -q
 ```
 
-Current tests verify skill-alias matching, false-positive prevention, and the 70/30 required-vs-preferred weighting logic.
+The test suite covers scoring edge cases, aliases, validation, privacy-aware caching, prompt trust
+boundaries, LLM client injection, PDF/text extraction, and individual LangGraph nodes. CI runs lint
+and enforces at least 80% package coverage on Python 3.11 and 3.12.
 
-## 🎯 Match-score design
+## Project structure
 
-CareerPilot deliberately does **not** ask the LLM to invent an ATS percentage. The numeric score is calculated in Python:
+```text
+careerpilot-ai/
+├── app.py
+├── careerpilot/
+│   ├── cache.py
+│   ├── config.py
+│   ├── graph.py
+│   ├── job_analyzer.py
+│   ├── prompts.py
+│   ├── recommendation_agent.py
+│   ├── resume_reader.py
+│   └── skill_matcher.py
+├── docs/
+│   ├── ARCHITECTURE.md
+│   ├── DEVELOPMENT.md
+│   └── RECRUITER_WALKTHROUGH.md
+├── examples/
+│   ├── sample_job_description.txt
+│   └── sample_report.json
+├── tests/
+├── pyproject.toml
+├── requirements.txt
+└── requirements-dev.txt
+```
 
-- Required skills: **70%** of the final score
-- Preferred skills: **30%** of the final score
+## Honest limitations
 
-Gemini is used where language understanding is useful: extracting job requirements and generating grounded recommendations.
+- Scanned/image-only PDFs need OCR and are not currently supported.
+- Alias matching is deterministic and transparent, but it cannot infer every related skill.
+- Gemini output quality depends on the clarity of the supplied job description.
+- The app has no authentication or database, so it is a portfolio prototype rather than a
+  multi-tenant production service.
 
-## 🔒 Privacy and repository hygiene
+See [Architecture](docs/ARCHITECTURE.md), [Development Guide](docs/DEVELOPMENT.md), and
+[Recruiter Walkthrough](docs/RECRUITER_WALKTHROUGH.md) for more detail.
 
-The repository ignores `.env`, Streamlit secrets, uploaded résumé PDFs, generated JSON reports, Python caches, virtual environments, and editor files. Uploaded files are handled as temporary files by the Streamlit UI and removed after processing.
+## Author
 
-## 📚 Additional documentation
-
-- [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — graph flow, component responsibilities, and design decisions
-- [`docs/DEVELOPMENT.md`](docs/DEVELOPMENT.md) — development workflow, testing, module guide, and extension ideas
-- [`examples/sample_job_description.txt`](examples/sample_job_description.txt) — safe sample input for testing
-
-## 🔮 Future improvements
-
-- Semantic skill matching using embeddings
-- More complete ATS keyword normalization
-- DOCX résumé support
-- Better visual dashboards and charts
-- Exportable PDF report
-- Persistent database-backed caching
-- Streamlit Community Cloud deployment
-- Additional tests for agent and graph behavior
-
-## 👨‍💻 Author
-
-**Pranith Bitla**  
-GitHub: [@pranithbitla](https://github.com/pranithbitla)
+**Pranith Bitla** — [@pranithbitla](https://github.com/pranithbitla)
