@@ -1,99 +1,25 @@
-# Agentic AI & Python Portfolio
+# CareerPilot AI — Resume & Job-Fit Agent
 
-A project-based repository showing my progression from Python fundamentals to practical Agentic AI applications.
+## What it does
+1. Reads a text-based PDF resume.
+2. Uses Gemini to extract structured job requirements from a pasted job description.
+3. Runs a transparent Python keyword match (70% required skills + 30% preferred skills).
+4. Uses Gemini to produce evidence-aware strengths, gaps, resume suggestions and interview questions.
+5. Uses LangGraph to orchestrate the steps and pass shared state between nodes.
 
-The main portfolio project is **CareerPilot AI**, an agentic résumé and job-match analyzer. The repository also contains foundational Python projects that demonstrate core programming concepts and problem-solving practice.
-
-## ⭐ Featured Project — CareerPilot AI
-
-[`careerpilot-ai/`](careerpilot-ai/)
-
-CareerPilot AI analyzes a résumé against a job description and produces a structured job-match report.
-
-**Highlights**
-
-- Agent workflow built with LangGraph
-- Google Gemini for structured job analysis and recommendations
-- Deterministic skill-match scoring instead of an LLM-generated percentage
-- Required vs. preferred skill weighting
-- Résumé skill-gap analysis and learning recommendations
-- Streamlit user interface
-- PDF résumé parsing
-- Pydantic structured outputs
-- Caching to reduce repeated LLM calls
-- Automated tests with pytest
-- GitHub Actions CI for CareerPilot tests
-
-**Tech stack:** Python · LangGraph · Google Gemini · Pydantic · Streamlit · pypdf · pytest
-
-➡️ [View the complete CareerPilot documentation](careerpilot-ai/README.md)
-
-## 📁 Repository Structure
-
-```text
-Agentic-AI/
-├── .github/
-│   └── workflows/
-│       └── careerpilot-tests.yml
-├── careerpilot-ai/          # Featured Agentic AI project
-├── python-projects/         # Python foundation projects
-├── .gitignore
-└── README.md
-```
-
-## 🧩 Project Index
-
-| Project | Focus | Level |
-|---|---|---|
-| [CareerPilot AI](careerpilot-ai/) | Agentic AI, LangGraph, Gemini, Streamlit | Featured |
-| [Chat Analyzer](python-projects/chat_analyzer.py) | Functions, strings, collections, modular Python | Foundational |
-| [ATM Simulator](python-projects/atm_simulator.py) | Loops, conditions, state, user input | Foundational |
-| [MovieMate](python-projects/movie_recommender.py) | Lists, conditions, dates, user interaction | Foundational |
-
-## 🛠 Engineering Practices Demonstrated
-
-- Clear project separation and documentation
-- Modular Python package structure in CareerPilot
-- Environment-variable based secret handling
-- `.env.example` instead of committed API keys
-- Unit tests with pytest
-- Automated CI with GitHub Actions
-- Git/GitHub based version control
-
-## 🚀 Quick Start
-
-Clone the repository:
-
+## Run
 ```bash
-git clone https://github.com/pranithbitla/Agentic-AI.git
-cd Agentic-AI
-```
-
-### Run CareerPilot AI
-
-```bash
-cd careerpilot-ai
 python -m venv .venv
+# Windows: .venv\Scripts\activate
+# macOS/Linux: source .venv/bin/activate
 pip install -r requirements.txt
 streamlit run app.py
 ```
+Enter your Gemini API key in the sidebar.
 
-Before running CareerPilot, copy `.env.example` to `.env` and add your Gemini API key.
-
-### Explore the Python projects
-
-```bash
-cd python-projects
-python atm_simulator.py
-```
-
-See [`python-projects/README.md`](python-projects/README.md) for details.
-
-## 🎯 Current Direction
-
-This repository documents a learning path from Python programming fundamentals toward AI engineering and Agentic AI. Future work will focus on stronger UI/UX, deployment, semantic matching, additional automated tests, and production-oriented AI workflows.
-
-## 👨‍💻 Author
-
-**Pranith Bitla**  
-GitHub: [@pranithbitla](https://github.com/pranithbitla)
+## Honest limitations
+- The match score is a keyword baseline, not a measure of actual skill proficiency.
+- A skill can be missed if it is described using different wording.
+- Scanned PDFs need OCR, which this version does not include.
+- The system provides decision support; it does not make hiring decisions.
+- Test with sample resumes and job descriptions before putting it on a public portfolio.
