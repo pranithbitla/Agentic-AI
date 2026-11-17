@@ -1,6 +1,0 @@
-google-genai
-langgraph
-pydantic
-python-dotenv
-pypdf
-streamlit
